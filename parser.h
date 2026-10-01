@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <stdbool.h>
-#include "core.h"
 
 typedef enum  {
     WAIT_START, // the parser checks if the incoming is a start byte i.e. comparing it to 0xAA, if yes it goes to next state.
@@ -12,7 +11,13 @@ typedef enum  {
     PACKET_COMPLETE, // we can check validity here
 } parser_states;
 
-void parse_byte(uint byte){
+// these are the expected bytes from the UART for correct parsing
+#define START_BYTE 0xAA //
+#define TYPE_BYTE 0x01 // for temperature
+#define LEN_BYTE 0x02 //
+#define END_BYTE 0x55
+
+void parse_byte(uint8_t byte){
     // The state of the parser can be implemented in this file
 }
 void parser_states_reset(void){
