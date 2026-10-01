@@ -1,0 +1,14 @@
+Packet:
+start 0xAA = (170) (8byte long) [recieved on wait_start]
+type 0x01 = (1) for temperature (8byte long) [read-type]
+len = 0x02 = 2 for length of two (for data high and low)
+data high= 8byte
+data low = 8byte
+crc = 8byte long ()
+end = 0x55 (8byte long) indicates it is the end of packet [fires the packet_complete]
+
+Assumptions:
+    -> reading data is one state, though we read two bytes. so storing them. so the end packet signal will either return the actual data or error.
+
+    -> the sensor only reads values between 0.0 and 99.99 (in degree celcius) (it sends 0000 upto 9999).
+
