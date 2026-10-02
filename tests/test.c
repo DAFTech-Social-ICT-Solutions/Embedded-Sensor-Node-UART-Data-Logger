@@ -1,8 +1,11 @@
 // unit tests
 #include "../crc.h"
 #include "../parser.h"
+#include "../ring_buffer.h"
+
 #include <stdint.h>
 #include <stdio.h>
+#include <time.h>
 
 void test_crc_integrity(){
     printf("\n============ Test CRC Integrity ==================\n");
@@ -54,8 +57,12 @@ void test_parser_integrity(uint8_t stream[]){
             case PARSER_PACKET_COMPLETE:
                 printf("\nPacket accepted: %i", byte);
                 valid_packets++;
+                int16_t temp = (parsed_data.data_high << 8 )| parsed_data.data_low;
+                measurement_t measured = {.temperature=temp, .timestamp=time(NULL)};
+                if (buffer_push(measured)){
+                    printf("\nStored!");
+                }
                 break;
-
         }
     }
     uint16_t total_errors = crc_error + type_error + length_error +

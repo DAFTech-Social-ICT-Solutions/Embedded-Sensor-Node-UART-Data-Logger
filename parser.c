@@ -6,7 +6,6 @@
 static parser_states current_state = WAIT_START;
 
 static uint8_t data_read = 0;
-static packet_data parsed_data;
 
 parser_status parse_byte(uint8_t byte){
     switch (current_state) {
@@ -90,3 +89,5 @@ void parser_states_reset(){
     current_state = WAIT_START;
     data_read = 0;
 }
+
+

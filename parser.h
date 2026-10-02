@@ -35,6 +35,7 @@ typedef struct {
     uint8_t data_low;
 } packet_data;
 
+static packet_data parsed_data;
 
 parser_status parse_byte(uint8_t byte);
     // The state of the parser can be implemented in this file
