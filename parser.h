@@ -20,7 +20,6 @@ typedef enum {
     PARSER_BUFFER_OVERFLOW_ERROR,
     PARSER_PACKET_COMPLETE,
     PARSER_WAITING
-
 } parser_status;
 
 // these are the expected bytes from the UART for correct parsing
@@ -28,6 +27,13 @@ typedef enum {
 #define TYPE_BYTE 0x01 // for temperature
 #define LEN_BYTE 0x02 //
 #define END_BYTE 0x55
+
+typedef struct {
+    uint8_t type;
+    uint8_t length;
+    uint8_t data_high;
+    uint8_t data_low;
+} packet_data;
 
 
 parser_status parse_byte(uint8_t byte);

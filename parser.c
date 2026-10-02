@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdint.h>
 
 #include "parser.h"
@@ -7,7 +6,7 @@
 static parser_states current_state = WAIT_START;
 
 static uint8_t data_read = 0;
-static uint8_t crc_payload[4];
+static packet_data parsed_data;
 
 parser_status parse_byte(uint8_t byte){
     switch (current_state) {
@@ -21,7 +20,7 @@ parser_status parse_byte(uint8_t byte){
         case READ_TYPE:
             if (byte == TYPE_BYTE){
                 current_state = READ_LENGTH;
-                crc_payload[0] = byte;
+                parsed_data.type = byte;
                 return PARSER_OK;
             }
             else{
@@ -32,7 +31,7 @@ parser_status parse_byte(uint8_t byte){
         case READ_LENGTH:
             if (byte == LEN_BYTE){
                 current_state = READ_DATA;
-                crc_payload[1] = byte;
+                parsed_data.length = byte;
                 return PARSER_OK;
             }
             else{
@@ -44,10 +43,10 @@ parser_status parse_byte(uint8_t byte){
             // first -> data_high, second -> data_low and next state; so the next byte lands on read_crc cleanly.
             // checks if data_buffer has read two times
             if (data_read == 0) {
-                crc_payload[2] = byte;
+                parsed_data.data_high = byte;
                 data_read = 1;
             } else {
-                crc_payload[3] = byte;
+                parsed_data.data_low = byte;
                 current_state = READ_CRC;
             }
 
@@ -56,7 +55,7 @@ parser_status parse_byte(uint8_t byte){
         case READ_CRC:{
             // stores the data to CRC for checking validity.
             uint8_t crc_received = byte;
-            uint8_t crc_calculated = generate_crc(crc_payload);
+            uint8_t crc_calculated = generate_crc((const uint8_t *) &parsed_data);
 
             if (crc_received == crc_calculated){
                 current_state = WAIT_END;
