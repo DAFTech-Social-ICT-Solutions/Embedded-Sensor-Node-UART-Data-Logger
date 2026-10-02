@@ -11,24 +11,26 @@ typedef enum  {
     PACKET_COMPLETE,
 } parser_states;
 
+typedef enum {
+    PARSER_OK,
+    PARSER_CRC_ERROR,
+    PARSER_TYPE_ERROR,
+    PARSER_LENGTH_ERROR,
+    PARSER_BAD_END,
+    PARSER_BUFFER_OVERFLOW_ERROR,
+    PARSER_PACKET_COMPLETE,
+    PARSER_WAITING
+
+} parser_status;
+
 // these are the expected bytes from the UART for correct parsing
 #define START_BYTE 0xAA //
 #define TYPE_BYTE 0x01 // for temperature
 #define LEN_BYTE 0x02 //
 #define END_BYTE 0x55
 
-// Error statistics
-// uint8_t valid_packets;
-// uint8_t invalif_packets;
-// uint8_t crc_errors;
-// uint8_t invalid_type_errors;
-// uint8_t invalid_length_errors;
-// uint8_t invalid_end_errors;
-// uint8_t buffer_overflow_error;
 
-void parse_byte(uint8_t byte);
+parser_status parse_byte(uint8_t byte);
     // The state of the parser can be implemented in this file
 
 void parser_states_reset();
-    // this will set the state to 0 i.e. wait_start
-    // and removes variable

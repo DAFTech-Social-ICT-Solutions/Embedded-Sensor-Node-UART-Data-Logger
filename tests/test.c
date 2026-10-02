@@ -12,10 +12,39 @@ void test_crc_integrity(){
 }
 
 
-void test_parser_integrity(uint8_t packet[7]){
+void test_parser_integrity(uint8_t stream[]){
+    // length is how many elements we have in the packet
     printf("\n============ Packet Test ================\n");
-    for (int i=0; i<7; i++){
-        parse_byte(packet[i]);
+
+    for (int byte = 0; byte < 42; byte++){
+        printf("\n============ Byte %d = %02x ================\n", byte, stream[byte]);
+        switch(parse_byte(stream[byte])){
+            case PARSER_WAITING:
+                printf("\nWaiting for start byte...");
+                break;
+            case PARSER_OK:
+                printf("\nPARSER_OK");
+                break;
+            case PARSER_CRC_ERROR:
+                printf("\nCRC Error");
+                break;
+            case PARSER_TYPE_ERROR:
+                 printf("\nType Error");
+                break;
+            case PARSER_LENGTH_ERROR:
+                 printf("\nLength Error");
+                break;
+            case PARSER_BAD_END:
+                 printf("\nBad End Error");
+                break;
+            case PARSER_BUFFER_OVERFLOW_ERROR:
+                 printf("\nBuffer overflow Error");
+                break;
+            case PARSER_PACKET_COMPLETE:
+                printf("\nPacket accepted: %i", byte);
+                break;
+
+        }
     }
 }
 
@@ -25,21 +54,17 @@ void test_parser_integrity(uint8_t packet[7]){
 int main(){
     test_crc_integrity();
 
-    uint8_t valid_packet[7] = {0xAA, 0x01, 0x02, 0x0c, 0x22, 0xD2, 0x55};
-    // CRC for data is precalculated 0xD2.
-    uint8_t start_invalid[7] = {0xEE, 0x01, 0x02, 0x0c, 0x22, 0xD2, 0x55};
-    uint8_t type_invalid[7] = {0xAA, 0xEE, 0x02, 0x0c, 0x22, 0xD2, 0x55};
-    uint8_t length_invalid[7] = {0xAA, 0x01, 0xEE, 0x0c, 0x22, 0xD2, 0x55};
-    uint8_t crc_invalid[7] = {0xAA, 0x01, 0x02, 0x0c, 0x22, 0xEE, 0x55};
-    uint8_t end_invalid[7] = {0xAA, 0x01, 0x02, 0x0c, 0x22, 0xD2, 0xEE};
+    uint8_t packet_stream[] = {
+        0xAA, 0x01, 0x02, 0x0c, 0x22, 0xD2, 0x55, // valid packet crc = 0xD2 precalculated
+        0xEE, 0x01, 0x02, 0x0c, 0x22, 0xD2, 0x55, // bad start byte packet
+        0xAA, 0xEE, 0x02, 0x0c, 0x22, 0xD2, 0x55, // type invalid packet
+        0xAA, 0x01, 0xEE, 0x0c, 0x22, 0xD2, 0x55, // length invalid packet
+        0xAA, 0x01, 0x02, 0x0c, 0x22, 0xEE, 0x55, // crc invalid packet
+        0xAA, 0x01, 0x02, 0x0c, 0x22, 0xD2, 0xEE,  //end invalid packet
 
-    test_parser_integrity(valid_packet);
-    test_parser_integrity(start_invalid);
-    test_parser_integrity(type_invalid);
-    test_parser_integrity(length_invalid);
-    test_parser_integrity(crc_invalid);
-    test_parser_integrity(end_invalid);
-    test_parser_integrity(valid_packet);
+    };
+
+    test_parser_integrity(packet_stream);
 
 
     return 0;

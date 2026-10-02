@@ -12,4 +12,8 @@ Assumptions:
 
     -> the sensor only reads values between 0.0 and 99.99 (in degree celcius) (it sends 0000 upto 9999).
 
+    -> t
+
 TESTING
+gcc -std=c99 -Wall -Wextra -Werror -I. -I./tests tests/test.c parser.c crc.c -o test && ./test
+
