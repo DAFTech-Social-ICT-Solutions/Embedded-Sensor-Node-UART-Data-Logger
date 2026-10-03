@@ -15,5 +15,4 @@ Assumptions:
     -> there is only one UART device
 
 TESTING
-gcc -std=c99 -Wall -Wextra -Werror -I. -I./tests tests/test.c parser.c crc.c -o test && ./test
-
+gcc -std=c99 -Wall -Wextra -Werror -I. -I./tests tests/test.c parser.c crc.c ring_buffer.c statistics.c -o ./bin/test && ./bin/test
