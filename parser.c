@@ -7,6 +7,8 @@ static parser_states current_state = WAIT_START;
 
 static uint8_t data_read = 0;
 
+packet_data parsed_data;
+
 parser_status parse_byte(uint8_t byte){
     switch (current_state) {
         case WAIT_START:

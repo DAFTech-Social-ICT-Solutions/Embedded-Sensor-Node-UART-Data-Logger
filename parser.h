@@ -17,7 +17,6 @@ typedef enum {
     PARSER_TYPE_ERROR,
     PARSER_LENGTH_ERROR,
     PARSER_BAD_END,
-    PARSER_BUFFER_OVERFLOW_ERROR,
     PARSER_PACKET_COMPLETE,
     PARSER_WAITING
 } parser_status;
@@ -35,7 +34,7 @@ typedef struct {
     uint8_t data_low;
 } packet_data;
 
-static packet_data parsed_data;
+extern packet_data parsed_data;
 
 parser_status parse_byte(uint8_t byte);
     // The state of the parser can be implemented in this file
