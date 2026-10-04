@@ -5,7 +5,7 @@ typedef enum  {
     WAIT_START, // check if incoming byte is a start byte (compare with 0xAA).
     READ_TYPE,
     READ_LENGTH,
-    READ_DATA, // there are two 8bytes we will read here
+    READ_DATA, // there are two bytes we will read here
     READ_CRC, // Receiving and checking the CRC for errors
     WAIT_END, // waiting the end byte
     PACKET_COMPLETE,
