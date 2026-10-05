@@ -8,14 +8,24 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <assert.h>
 
 void test_crc_integrity(){
     printf("\n============ Test CRC Integrity ==================\n");
 
-    uint8_t payload_example[4] = {1, 2, 55, 32};
-    uint8_t result = generate_crc(payload_example);
-
-    printf("\ninteger: [1 2 55 32]\nin hex:[0x01 0x02 0x37 0x20] -> CRC: 0x%02x\n",result);
+    uint8_t payload_1[4] = {1, 2, 55, 32};
+    uint8_t result_1 = generate_crc(payload_1);
+    uint8_t payload_2[4] = {1, 2, 0xFF, 0xFF};
+    uint8_t result_2 = generate_crc(payload_2);
+    uint8_t payload_3[4] = {1, 2, 0x00, 0x00};
+    uint8_t result_3 = generate_crc(payload_3);
+    uint8_t payload_4[4] = {0xAF, 0xBF, 0xCF, 0xDF};
+    uint8_t result_4 = generate_crc(payload_4);
+    assert( result_1 == 0xb2); // tested against real world calculators
+    assert( result_2 == 0xE4); // tested against real world calculators
+    assert( result_3 == 0xC0); // tested against real world calculators
+    assert( result_4 == 0xBD); // tested against real world calculators
+    printf("CRC Integrity TEST PASSED!");
 }
 
 
@@ -82,7 +92,7 @@ void test_parser_integrity(uint8_t stream[]){
         }
     }
     uint16_t total_errors = crc_error + type_error + length_error +
-    bad_end_error;
+    bad_end_error + buffer_overflow_errors;
 
     printf("\n=================== SUMMARY REPORT ===================\n");
     printf(" Valid Packets Parsed:  %u\n", valid_packets);
@@ -108,9 +118,35 @@ void test_statistics_integrity(){
     printf("=  MIN : %d.%02d*C\n", min/100, abs(min)%100);
     printf("=  AVG : %d.%02d*C\n", avg/100, abs(avg)%100);
 
+   /*
+    the buffer is expected to have exactly these data at the end of stream:
+    Buffer at 0: 4334
+    Buffer at 1: -1500
+    Buffer at 2: 0
+    Buffer at 3: 32767
+    Buffer at 4: -32768
+    Buffer at 5: -18361
+    Buffer at 6: -3951
+    Buffer at 7: -5372
+    Buffer at 8: -10856
+    Buffer at 9: -13283
+    Buffer at 10: 15741
+    Buffer at 11: -14303
+    Buffer at 12: 7651
+    Buffer at 13: -17918
+    Buffer at 14: -18048
+    Buffer at 15: -13860*/
+    // Sum = -89727 count = 16 avg = −5607.9375 now C truncates decimal points for integer division
+    // Expected answer = -5607 or -56.07*C
+    assert(max == 32767);
+    assert(min == -32768);
+    assert(avg == -5607);// -5607.9375 from online average calculators
+
+    printf("Statistics test: PASSED!");
+    // TODO add test cases for buffer that is not full buffer and that of empty buffer.
 }
 
-uint8_t stream[350] = {
+uint8_t test_stream[350] = {
     0xAA, 0x01, 0x02, 0x10, 0xEE, 0x13, 0x55, // Pkt 01: VALID: Val =  +4334 (0x10EE) | CRC = 0x13
     0xAA, 0x01, 0x02, 0xFA, 0x24, 0xAA, 0x55, // Pkt 02: VALID: Val =  -1500 (0xFA24) | CRC = 0xAA
     0xAA, 0x01, 0x02, 0x00, 0x00, 0xC0, 0x55, // Pkt 03: VALID: Val =     +0 (0x0000) | CRC = 0xC0
@@ -164,11 +200,50 @@ uint8_t stream[350] = {
     0xAA, 0x01, 0x02, 0x27, 0x7C, 0x76, 0x55 // Pkt 50: VALID: Val = +10108 (0x277C) | CRC = 0x76
 };
 
+void test_buffer_integrity(){
+    // the valid info stream: 4334 -> -1500 -> 0 ...
+    printf("\n\n============ Buffer Test ================");
+    measurement_t m;
+    for (uint8_t index = 0; index < buffer_count(); index++ ){
+        buffer_peek_at(index, &m);
+        printf("\nBuffer at %d: %d", index, m.temperature);
+    }
+
+    printf("\n Running tests...");
+    assert (buffer_count() == 16 );
+    buffer_pop(&m);
+    assert(buffer_count() == 15);
+    assert(m.temperature == 4334); // it is FIFO
+
+    buffer_pop(&m);
+    assert(buffer_count() == 14);
+    assert(m.temperature == -1500); // it is FIFO
+
+    buffer_push(m); // should put -1500 to last queue
+    assert(buffer_count() == 15);
+
+    buffer_pop(&m);
+    assert(buffer_count() == 14);
+    assert(m.temperature == 0); // should not pop the last in. But keep sequence
+
+    // Test does it handle out of bound pops?
+    for (int i = 0; i < 20; i++){
+        buffer_pop(&m);
+    }
+    assert(buffer_count() == 0);
+    // Test does it handle out of bound pushs?
+    for (int i = 0; i < 20; i++){
+        buffer_push(m);
+    }
+    assert(buffer_count() == 16);
+    printf("\nCyclic buffer tests: PASSED!");
+}
 
 int main(){
     test_crc_integrity();
-    test_parser_integrity(stream);
+    test_parser_integrity(test_stream);
     test_statistics_integrity();
+    test_buffer_integrity();
     return 0;
 }
 

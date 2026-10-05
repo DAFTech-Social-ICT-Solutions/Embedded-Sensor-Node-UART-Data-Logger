@@ -1,2 +1,1 @@
-// This is the main loop combining all the components
-
+// This is the main code run on a specific MCU.
