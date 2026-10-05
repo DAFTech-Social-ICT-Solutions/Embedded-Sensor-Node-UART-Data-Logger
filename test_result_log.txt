@@ -1,0 +1,748 @@
+
+============ Test CRC Integrity ==================
+CRC Integrity TEST PASSED!
+============ Packet Test ================
+
+== Byte 0 = aa = PARSER_OK
+
+== Byte 1 = 01 = PARSER_OK
+
+== Byte 2 = 02 = PARSER_OK
+
+== Byte 3 = 10 = PARSER_OK
+
+== Byte 4 = ee = PARSER_OK
+
+== Byte 5 = 13 = PARSER_OK
+
+== Byte 6 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 7 = aa = PARSER_OK
+
+== Byte 8 = 01 = PARSER_OK
+
+== Byte 9 = 02 = PARSER_OK
+
+== Byte 10 = fa = PARSER_OK
+
+== Byte 11 = 24 = PARSER_OK
+
+== Byte 12 = aa = PARSER_OK
+
+== Byte 13 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 14 = aa = PARSER_OK
+
+== Byte 15 = 01 = PARSER_OK
+
+== Byte 16 = 02 = PARSER_OK
+
+== Byte 17 = 00 = PARSER_OK
+
+== Byte 18 = 00 = PARSER_OK
+
+== Byte 19 = c0 = PARSER_OK
+
+== Byte 20 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 21 = ee = Waiting for start byte...
+
+== Byte 22 = 01 = Waiting for start byte...
+
+== Byte 23 = 02 = Waiting for start byte...
+
+== Byte 24 = ce = Waiting for start byte...
+
+== Byte 25 = 60 = Waiting for start byte...
+
+== Byte 26 = dc = Waiting for start byte...
+
+== Byte 27 = 55 = Waiting for start byte...
+
+== Byte 28 = aa = PARSER_OK
+
+== Byte 29 = 01 = PARSER_OK
+
+== Byte 30 = 02 = PARSER_OK
+
+== Byte 31 = 7f = PARSER_OK
+
+== Byte 32 = ff = PARSER_OK
+
+== Byte 33 = 52 = PARSER_OK
+
+== Byte 34 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 35 = aa = PARSER_OK
+
+== Byte 36 = 01 = PARSER_OK
+
+== Byte 37 = 02 = PARSER_OK
+
+== Byte 38 = 80 = PARSER_OK
+
+== Byte 39 = 00 = PARSER_OK
+
+== Byte 40 = 76 = PARSER_OK
+
+== Byte 41 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 42 = aa = PARSER_OK
+
+== Byte 43 = 01 = PARSER_OK
+
+== Byte 44 = 02 = PARSER_OK
+
+== Byte 45 = b8 = PARSER_OK
+
+== Byte 46 = 47 = PARSER_OK
+
+== Byte 47 = f5 = PARSER_OK
+
+== Byte 48 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 49 = aa = PARSER_OK
+
+== Byte 50 = 99 = Type Error
+
+== Byte 51 = 02 = Waiting for start byte...
+
+== Byte 52 = f8 = Waiting for start byte...
+
+== Byte 53 = 48 = Waiting for start byte...
+
+== Byte 54 = 65 = Waiting for start byte...
+
+== Byte 55 = 55 = Waiting for start byte...
+
+== Byte 56 = aa = PARSER_OK
+
+== Byte 57 = 01 = PARSER_OK
+
+== Byte 58 = 02 = PARSER_OK
+
+== Byte 59 = f0 = PARSER_OK
+
+== Byte 60 = 91 = PARSER_OK
+
+== Byte 61 = 2a = PARSER_OK
+
+== Byte 62 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 63 = aa = PARSER_OK
+
+== Byte 64 = 01 = PARSER_OK
+
+== Byte 65 = 02 = PARSER_OK
+
+== Byte 66 = eb = PARSER_OK
+
+== Byte 67 = 04 = PARSER_OK
+
+== Byte 68 = 08 = PARSER_OK
+
+== Byte 69 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 70 = aa = PARSER_OK
+
+== Byte 71 = 01 = PARSER_OK
+
+== Byte 72 = 02 = PARSER_OK
+
+== Byte 73 = d5 = PARSER_OK
+
+== Byte 74 = 98 = PARSER_OK
+
+== Byte 75 = fa = PARSER_OK
+
+== Byte 76 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 77 = aa = PARSER_OK
+
+== Byte 78 = 01 = PARSER_OK
+
+== Byte 79 = 02 = PARSER_OK
+
+== Byte 80 = cc = PARSER_OK
+
+== Byte 81 = 1d = PARSER_OK
+
+== Byte 82 = 82 = PARSER_OK
+
+== Byte 83 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 84 = aa = PARSER_OK
+
+== Byte 85 = 01 = PARSER_OK
+
+== Byte 86 = 02 = PARSER_OK
+
+== Byte 87 = 3d = PARSER_OK
+
+== Byte 88 = 7d = PARSER_OK
+
+== Byte 89 = a4 = PARSER_OK
+
+== Byte 90 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 91 = aa = PARSER_OK
+
+== Byte 92 = 01 = PARSER_OK
+
+== Byte 93 = 02 = PARSER_OK
+
+== Byte 94 = c8 = PARSER_OK
+
+== Byte 95 = 21 = PARSER_OK
+
+== Byte 96 = 62 = PARSER_OK
+
+== Byte 97 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 98 = aa = PARSER_OK
+
+== Byte 99 = 01 = PARSER_OK
+
+== Byte 100 = 0a = Length Error
+
+== Byte 101 = 49 = Waiting for start byte...
+
+== Byte 102 = 0a = Waiting for start byte...
+
+== Byte 103 = 41 = Waiting for start byte...
+
+== Byte 104 = 55 = Waiting for start byte...
+
+== Byte 105 = aa = PARSER_OK
+
+== Byte 106 = 01 = PARSER_OK
+
+== Byte 107 = 02 = PARSER_OK
+
+== Byte 108 = 1d = PARSER_OK
+
+== Byte 109 = e3 = PARSER_OK
+
+== Byte 110 = d9 = PARSER_OK
+
+== Byte 111 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 112 = aa = PARSER_OK
+
+== Byte 113 = 01 = PARSER_OK
+
+== Byte 114 = 02 = PARSER_OK
+
+== Byte 115 = ba = PARSER_OK
+
+== Byte 116 = 02 = PARSER_OK
+
+== Byte 117 = 03 = PARSER_OK
+
+== Byte 118 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 119 = aa = PARSER_OK
+
+== Byte 120 = 01 = PARSER_OK
+
+== Byte 121 = 02 = PARSER_OK
+
+== Byte 122 = b9 = PARSER_OK
+
+== Byte 123 = 80 = PARSER_OK
+
+== Byte 124 = bb = PARSER_OK
+
+== Byte 125 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 126 = 7f = Waiting for start byte...
+
+== Byte 127 = 12 = Waiting for start byte...
+
+== Byte 128 = fe = Waiting for start byte...
+
+== Byte 129 = aa = PARSER_OK
+
+== Byte 130 = 01 = PARSER_OK
+
+== Byte 131 = 02 = PARSER_OK
+
+== Byte 132 = c9 = PARSER_OK
+
+== Byte 133 = dc = PARSER_OK
+
+== Byte 134 = 8a = PARSER_OK
+
+== Byte 135 = 55 = Packet validated: saving...  Buffer: Saved!
+
+== Byte 136 = aa = PARSER_OK
+
+== Byte 137 = 01 = PARSER_OK
+
+== Byte 138 = 02 = PARSER_OK
+
+== Byte 139 = e9 = PARSER_OK
+
+== Byte 140 = d8 = PARSER_OK
+
+== Byte 141 = 38 = PARSER_OK
+
+== Byte 142 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 143 = aa = PARSER_OK
+
+== Byte 144 = 01 = PARSER_OK
+
+== Byte 145 = 02 = PARSER_OK
+
+== Byte 146 = ed = PARSER_OK
+
+== Byte 147 = 6f = PARSER_OK
+
+== Byte 148 = 60 = PARSER_OK
+
+== Byte 149 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 150 = aa = PARSER_OK
+
+== Byte 151 = 01 = PARSER_OK
+
+== Byte 152 = 02 = PARSER_OK
+
+== Byte 153 = 33 = PARSER_OK
+
+== Byte 154 = 3e = PARSER_OK
+
+== Byte 155 = 43 = CRC Error
+
+== Byte 156 = 55 = Waiting for start byte...
+
+== Byte 157 = aa = PARSER_OK
+
+== Byte 158 = 01 = PARSER_OK
+
+== Byte 159 = 02 = PARSER_OK
+
+== Byte 160 = 4b = PARSER_OK
+
+== Byte 161 = fd = PARSER_OK
+
+== Byte 162 = f1 = PARSER_OK
+
+== Byte 163 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 164 = aa = PARSER_OK
+
+== Byte 165 = 01 = PARSER_OK
+
+== Byte 166 = 02 = PARSER_OK
+
+== Byte 167 = b8 = PARSER_OK
+
+== Byte 168 = ab = PARSER_OK
+
+== Byte 169 = 7f = PARSER_OK
+
+== Byte 170 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 171 = aa = PARSER_OK
+
+== Byte 172 = 01 = PARSER_OK
+
+== Byte 173 = 02 = PARSER_OK
+
+== Byte 174 = 41 = PARSER_OK
+
+== Byte 175 = 8d = PARSER_OK
+
+== Byte 176 = 24 = PARSER_OK
+
+== Byte 177 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 178 = aa = PARSER_OK
+
+== Byte 179 = 01 = PARSER_OK
+
+== Byte 180 = 02 = PARSER_OK
+
+== Byte 181 = e4 = PARSER_OK
+
+== Byte 182 = c7 = PARSER_OK
+
+== Byte 183 = 8c = PARSER_OK
+
+== Byte 184 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 185 = aa = PARSER_OK
+
+== Byte 186 = 01 = PARSER_OK
+
+== Byte 187 = 02 = PARSER_OK
+
+== Byte 188 = 3d = PARSER_OK
+
+== Byte 189 = 61 = PARSER_OK
+
+== Byte 190 = f0 = PARSER_OK
+
+== Byte 191 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 192 = aa = PARSER_OK
+
+== Byte 193 = 01 = PARSER_OK
+
+== Byte 194 = 02 = PARSER_OK
+
+== Byte 195 = 1d = PARSER_OK
+
+== Byte 196 = 45 = PARSER_OK
+
+== Byte 197 = a2 = PARSER_OK
+
+== Byte 198 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 199 = aa = PARSER_OK
+
+== Byte 200 = 01 = PARSER_OK
+
+== Byte 201 = 02 = PARSER_OK
+
+== Byte 202 = ea = PARSER_OK
+
+== Byte 203 = 4e = PARSER_OK
+
+== Byte 204 = ec = PARSER_OK
+
+== Byte 205 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 206 = aa = PARSER_OK
+
+== Byte 207 = 01 = PARSER_OK
+
+== Byte 208 = 02 = PARSER_OK
+
+== Byte 209 = 24 = PARSER_OK
+
+== Byte 210 = df = PARSER_OK
+
+== Byte 211 = 29 = PARSER_OK
+
+== Byte 212 = ee = Bad End Error
+
+== Byte 213 = aa = PARSER_OK
+
+== Byte 214 = 01 = PARSER_OK
+
+== Byte 215 = 02 = PARSER_OK
+
+== Byte 216 = 48 = PARSER_OK
+
+== Byte 217 = ba = PARSER_OK
+
+== Byte 218 = 1c = PARSER_OK
+
+== Byte 219 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 220 = aa = PARSER_OK
+
+== Byte 221 = 01 = PARSER_OK
+
+== Byte 222 = 02 = PARSER_OK
+
+== Byte 223 = f9 = PARSER_OK
+
+== Byte 224 = 17 = PARSER_OK
+
+== Byte 225 = 0c = PARSER_OK
+
+== Byte 226 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 227 = aa = PARSER_OK
+
+== Byte 228 = 01 = PARSER_OK
+
+== Byte 229 = 02 = PARSER_OK
+
+== Byte 230 = b3 = PARSER_OK
+
+== Byte 231 = 89 = PARSER_OK
+
+== Byte 232 = 06 = PARSER_OK
+
+== Byte 233 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 234 = aa = PARSER_OK
+
+== Byte 235 = 01 = PARSER_OK
+
+== Byte 236 = 02 = PARSER_OK
+
+== Byte 237 = da = PARSER_OK
+
+== Byte 238 = bf = PARSER_OK
+
+== Byte 239 = cc = PARSER_OK
+
+== Byte 240 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 241 = aa = PARSER_OK
+
+== Byte 242 = 01 = PARSER_OK
+
+== Byte 243 = 02 = PARSER_OK
+
+== Byte 244 = 1e = PARSER_OK
+
+== Byte 245 = 10 = PARSER_OK
+
+== Byte 246 = 31 = PARSER_OK
+
+== Byte 247 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 248 = aa = PARSER_OK
+
+== Byte 249 = 01 = PARSER_OK
+
+== Byte 250 = 02 = PARSER_OK
+
+== Byte 251 = 08 = PARSER_OK
+
+== Byte 252 = fa = PARSER_OK
+
+== Byte 253 = 80 = PARSER_OK
+
+== Byte 254 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 255 = aa = PARSER_OK
+
+== Byte 256 = 01 = PARSER_OK
+
+== Byte 257 = 02 = PARSER_OK
+
+== Byte 258 = f9 = PARSER_OK
+
+== Byte 259 = 02 = PARSER_OK
+
+== Byte 260 = 67 = PARSER_OK
+
+== Byte 261 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 262 = aa = PARSER_OK
+
+== Byte 263 = 01 = PARSER_OK
+
+== Byte 264 = 02 = PARSER_OK
+
+== Byte 265 = d9 = PARSER_OK
+
+== Byte 266 = aa = PARSER_OK
+
+== Byte 267 = 01 = CRC Error
+
+== Byte 268 = 02 = Waiting for start byte...
+
+== Byte 269 = e8 = Waiting for start byte...
+
+== Byte 270 = fe = Waiting for start byte...
+
+== Byte 271 = df = Waiting for start byte...
+
+== Byte 272 = 55 = Waiting for start byte...
+
+== Byte 273 = aa = PARSER_OK
+
+== Byte 274 = 01 = PARSER_OK
+
+== Byte 275 = 02 = PARSER_OK
+
+== Byte 276 = 08 = PARSER_OK
+
+== Byte 277 = 0b = PARSER_OK
+
+== Byte 278 = 59 = PARSER_OK
+
+== Byte 279 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 280 = aa = PARSER_OK
+
+== Byte 281 = 01 = PARSER_OK
+
+== Byte 282 = 02 = PARSER_OK
+
+== Byte 283 = cc = PARSER_OK
+
+== Byte 284 = 0a = PARSER_OK
+
+== Byte 285 = e7 = PARSER_OK
+
+== Byte 286 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 287 = aa = PARSER_OK
+
+== Byte 288 = 01 = PARSER_OK
+
+== Byte 289 = 02 = PARSER_OK
+
+== Byte 290 = c9 = PARSER_OK
+
+== Byte 291 = 9e = PARSER_OK
+
+== Byte 292 = 43 = PARSER_OK
+
+== Byte 293 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 294 = aa = PARSER_OK
+
+== Byte 295 = 01 = PARSER_OK
+
+== Byte 296 = 02 = PARSER_OK
+
+== Byte 297 = 13 = PARSER_OK
+
+== Byte 298 = 22 = PARSER_OK
+
+== Byte 299 = 46 = PARSER_OK
+
+== Byte 300 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 301 = aa = PARSER_OK
+
+== Byte 302 = 01 = PARSER_OK
+
+== Byte 303 = 02 = PARSER_OK
+
+== Byte 304 = ca = PARSER_OK
+
+== Byte 305 = a2 = PARSER_OK
+
+== Byte 306 = c8 = PARSER_OK
+
+== Byte 307 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 308 = aa = PARSER_OK
+
+== Byte 309 = 01 = PARSER_OK
+
+== Byte 310 = 02 = PARSER_OK
+
+== Byte 311 = 0d = PARSER_OK
+
+== Byte 312 = c6 = PARSER_OK
+
+== Byte 313 = 8a = CRC Error
+
+== Byte 314 = 55 = Waiting for start byte...
+
+== Byte 315 = aa = PARSER_OK
+
+== Byte 316 = 01 = PARSER_OK
+
+== Byte 317 = 02 = PARSER_OK
+
+== Byte 318 = 09 = PARSER_OK
+
+== Byte 319 = ed = PARSER_OK
+
+== Byte 320 = f0 = PARSER_OK
+
+== Byte 321 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 322 = aa = PARSER_OK
+
+== Byte 323 = 01 = PARSER_OK
+
+== Byte 324 = 02 = PARSER_OK
+
+== Byte 325 = 4c = PARSER_OK
+
+== Byte 326 = 6d = PARSER_OK
+
+== Byte 327 = 63 = PARSER_OK
+
+== Byte 328 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 329 = aa = PARSER_OK
+
+== Byte 330 = 01 = PARSER_OK
+
+== Byte 331 = 02 = PARSER_OK
+
+== Byte 332 = f5 = PARSER_OK
+
+== Byte 333 = 97 = PARSER_OK
+
+== Byte 334 = 79 = PARSER_OK
+
+== Byte 335 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 336 = aa = PARSER_OK
+
+== Byte 337 = 01 = PARSER_OK
+
+== Byte 338 = 02 = PARSER_OK
+
+== Byte 339 = bc = PARSER_OK
+
+== Byte 340 = ff = PARSER_OK
+
+== Byte 341 = 80 = PARSER_OK
+
+== Byte 342 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+== Byte 343 = aa = PARSER_OK
+
+== Byte 344 = 01 = PARSER_OK
+
+== Byte 345 = 02 = PARSER_OK
+
+== Byte 346 = 27 = PARSER_OK
+
+== Byte 347 = 7c = PARSER_OK
+
+== Byte 348 = 76 = PARSER_OK
+
+== Byte 349 = 55 = Packet validated: saving...  Buffer: Overflow error
+
+=================== SUMMARY REPORT ===================
+ Valid Packets Parsed:  42
+ Stored Packets: 16
+ Total Errors Detected: 32
+---------------------------------------------------------
+  - CRC Errors:             3
+  - Type Errors:            1
+  - Length Errors:          1
+  - Framing/Bad End Errors: 1
+  - Buffer Overflow Errors: 26
+===========================================================
+
+
+========== Current Buffer State ===============
+Buffer 0: 4334
+Buffer 1: -1500
+Buffer 2: 0
+Buffer 3: 32767
+Buffer 4: -32768
+Buffer 5: -18361
+Buffer 6: -3951
+Buffer 7: -5372
+Buffer 8: -10856
+Buffer 9: -13283
+Buffer 10: 15741
+Buffer 11: -14303
+Buffer 12: 7651
+Buffer 13: -17918
+Buffer 14: -18048
+Buffer 15: -13860
+================ Statistics ==================
+=  MAX : 327.67*C
+=  MIN : -327.68*C
+=  AVG : -56.07*C
+Statistics test: PASSED!
+
+============ Buffer Test ================
+ Running buffer tests on current buffer state
+ pop -> 4334 (count 15)
+ pop -> -1500 (count 14)
+ push -> -1500 (count 15)
+ pop -> 0 (count 14)
+Perform boundary tests

@@ -118,9 +118,19 @@ uint8_t generate_crc(uint8_t *payload){
 ```
 
 # Testing performed
-**CRC: ** This is tested against reliable online CRC calculator [Sunshine CRC Calculator]https://sunshine2k.de/coding/javascript/crc/crc_js.html by asserting a couple of the locally/code generated crc with results found from the site. 
 
-**Parser: ** This tested by a load of 350 stream of bytes (50 packets) of various cases generated with python scripts:
+To perform test run:
+bash:
+```bash
+gcc -std=c99 -Wall -Wextra -Werror -I. -I./tests tests/test.c parser.c crc.c ring_buffer.c statistics.c -o ./bin/test && ./bin/test
+```
+cmd: 
+```cmd 
+gcc -std=c99 -Wall -Wextra -Werror -I. -I./tests tests/test.c parser.c crc.c ring_buffer.c statistics.c -o ./bin/test & ./bin/test
+```
+**CRC:** This is tested against reliable online CRC calculator [Sunshine CRC Calculator](https://sunshine2k.de/coding/javascript/crc/crc_js.html) by asserting a couple of the locally/code generated crc with results found from the site. 
+
+**Parser:** This tested by a load of 350 stream of bytes (50 packets) of various cases generated with python scripts:
 - Valid 
 - Type invalid
 - Length invalid
@@ -128,8 +138,9 @@ uint8_t generate_crc(uint8_t *payload){
 - Bad ends
 - Incomplete packets
 - Noise stream (random)
-
+```
 =================== SUMMARY REPORT ===================
+
  Valid Packets Parsed:  42
  Stored Packets: 16
  Total Errors Detected: 32
@@ -140,16 +151,17 @@ uint8_t generate_crc(uint8_t *payload){
   - Framing/Bad End Errors: 1
   - Buffer Overflow Errors: 26
 ===========================================================
+```
 
-
-**Ring buffer: ** Valid parsed packets were saved to the ring buffer sequentially until the buffer reached its capacity (16).
+**Ring buffer:** Valid parsed packets were saved to the ring buffer sequentially until the buffer reached its capacity (16).
 These buffer data were tested with push and pop commands. 
 -   Carefully verifying their queue behavior is FIFO instead of LIFO. 
 -   Out of bound cases like poping an empty buffer and pushing on a full buffer. 
 
-**Statistics: **This function does operations over the buffer to calculate the max, min and average of the entire buffer values. 
+**Statistics:** This function does operations over the buffer to calculate the max, min and average of the entire buffer values. 
 The results returned from the statistics were asserted against calculated values.
 
+(use Test_result_log.txt for more or run test script)
 # Assumptions and Limitations
 ## Assumptions
 - Input to the MCU is delivered as byte sequence.
@@ -159,36 +171,6 @@ The results returned from the statistics were asserted against calculated values
 ## Limitations
 If a packet is incomplete it can miss one subsequently incoming valid packet.
 e.g. 0xAA 0x01 0x02 , then it halts and sends 0xAA 0x01 0x02 ...(complete and valid packet).
-Explanation: The parser expects the next bytes but finds a CRC error or some bad end error but what it was getting is a start of valid packet. So the valid packet is lost. 
+Explanation: The parser expects the next bytes but finds a CRC error or some bad end error but what it was getting is another start of valid packet. So the valid packet is lost. 
 
-Solving this is entirely possible, but it requires either branched parsing (memory and CPU inefficient) or limiting all byte ranges to assume 0xAA and 0xEE are always a start byte and end byte despite the state of the parser. 
 
-# Performance metrics:
-For embedded systems low latency, memory and power usage are key considerations...
-
-Giving crude analysis on the performance metrics we can consider the code simulation takedowns:
-**Memory**
-The memory usage can be classified as code memory (where the instructions sit) and runtime memory (all data processed);
-*code or flash memory (instructions)*: 
-    PARSER:  
-    
-    CRC:
-    
-    RING_BUFFER:
-*runtime memory (variables)*: 
-    
-    PARSER function:
-        parser_state: enum of 7 elements 1 byte
-        parser_status: enum of 7 elements 1 byte
-        packet_data / parsed_data: struct of 4 uint8_t elements (4bytes)
-        current_state: 1 byte
-            
-    CRC Function:
-        crc_result: uint8_t type takes one byte memory
-        payload: array of 4 uint8_t <= packet_data zero-copy (memory save!) no byte take!
-        
-    RING BUFFER function:
-        measurement_t: struct of int16_t and uint32_t 2 and 4 bytes => 6bytes
-        head, tail and count: uint8_t => 3bytes
-        data: 16 x measurement_t = 6*16 = 96
-    Memory usage: roughly 109 bytes!
