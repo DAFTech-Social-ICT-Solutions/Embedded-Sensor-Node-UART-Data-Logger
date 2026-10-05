@@ -112,6 +112,12 @@ void test_statistics_integrity(){
     int16_t min = get_min();
     int32_t avg = get_average();
 
+    printf("\n========== Current Buffer State ===============");
+    measurement_t m;
+    for (uint8_t index = 0; index < buffer_count(); index++ ){
+        buffer_peek_at(index, &m);
+        printf("\nBuffer %d: %d", index, m.temperature);
+    }
 
     printf("\n================ Statistics ==================\n");
     printf("=  MAX : %d.%02d*C\n", max/100, abs(max)%100);
@@ -202,31 +208,32 @@ uint8_t test_stream[350] = {
 
 void test_buffer_integrity(){
     // the valid info stream: 4334 -> -1500 -> 0 ...
-    printf("\n\n============ Buffer Test ================");
     measurement_t m;
-    for (uint8_t index = 0; index < buffer_count(); index++ ){
-        buffer_peek_at(index, &m);
-        printf("\nBuffer at %d: %d", index, m.temperature);
-    }
+    printf("\n\n============ Buffer Test ================");
+    printf("\n Running buffer tests on current buffer state");
 
-    printf("\n Running tests...");
     assert (buffer_count() == 16 );
     buffer_pop(&m);
     assert(buffer_count() == 15);
-    assert(m.temperature == 4334); // it is FIFO
+    assert(m.temperature == 4334);// it is FIFO
+    printf("\n pop -> %d (count %d)",m.temperature, buffer_count());
 
     buffer_pop(&m);
     assert(buffer_count() == 14);
     assert(m.temperature == -1500); // it is FIFO
+    printf("\n pop -> %d (count %d)",m.temperature, buffer_count());
 
     buffer_push(m); // should put -1500 to last queue
     assert(buffer_count() == 15);
+    printf("\n push -> %d (count %d)",m.temperature, buffer_count());
 
     buffer_pop(&m);
     assert(buffer_count() == 14);
     assert(m.temperature == 0); // should not pop the last in. But keep sequence
+    printf("\n pop -> %d (count %d)",m.temperature, buffer_count());
 
     // Test does it handle out of bound pops?
+    printf("\nPerform boundary tests");
     for (int i = 0; i < 20; i++){
         buffer_pop(&m);
     }
