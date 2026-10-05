@@ -40,7 +40,7 @@ void test_parser_integrity(uint8_t stream[]){
     printf("\n============ Packet Test ================\n");
 
     for (int byte = 0; byte < 350; byte++){
-        printf("\n== Byte %d = %02x =", byte, stream[byte]);
+        printf("== Byte %d = %02x =", byte, stream[byte]);
         switch(parse_byte(stream[byte])){
             case PARSER_WAITING:
                 printf(" Waiting for start byte...\n");
