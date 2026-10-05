@@ -2,21 +2,23 @@
 
 For systems with constraints on memory and processing power i.e. embedded systems; low latency, power efficiency and reliability are key considerations. To achieve a considerable low latent and power efficient data logging system adhering to some key design approaches is necessary:
 ### Separation of concerns:
-Each components strictly do only what they are meant to do. i.e. parser component only parses and validates but doesn't need save to buffer.
-### Data driven approach : 
+Each components strictly do only what they are meant to do. i.e. parser component only parses and validates but doesn't need to save to buffer. Thus each component does best of its ability on what it concerns only.
 
 ### Quantization of floats:
-As per the cost in processing for embedded systems; integer calculations are favoured over floating point calculations. Using representations of float as in , for Example: 12.03*C -> 123 and  -> 12.34*C -> 1234 is the calculations approach used on parsing, storing and statistics calculations. Still displaying floating point format at the final will suffice. 
+As per the cost of processing in embedded systems; integer calculations are favoured over floating point calculations. Using representations of float as in , for Example: 12.03*C -> 123 and  -> 12.34*C -> 1234 is the calculations approach used on parsing, storing and statistics calculations. Still displaying floating point format at the final will suffice. 
 CRITICAL: Other systems cascaded or added to this system should take this into consideration!
 
 ### Finite state machine
- Usage of explicit states for readable code and memory efficiency makes the parser less prone to bugs and unexpected behaviours.
+Usage of explicit states for readable code and memory efficiency makes the parser less prone to bugs and unexpected behaviours. The parser processes incoming bytes based on the 7 states. 
+
+### Bottom up approach
+The development begins by developing low-level foundational parts before combining them. Core utilities—such as the 8-bit CRC generator using 0x07 polynomial, state based parser, and array-backed ring buffer operations—were fully implemented and unit-tested in isolation. After these individual components were proven stable were they linked together to form the complete telemetry parsing, storage, and statistics processing pipeline.
+
 ### Test driven design : 
-Rigorous tests for each components of system before advancing to other components.
-### Bottom up approach : 
-Designing lower level components such as CRC generator parser before integrating all components.
+Cumulative rigorous tests for each components of system as well as their integration before advancing. Generated CRC bytes can be tested against reliable CRC-gen tools found online, components like parser can be tested on generated mixture of various packet both valid and invalid. 
+
 ### Real applications : 
-The code assumes a real UART data logging system. Making it more practical.
+The code assumes a real UART data logging system. This can be used on a device that takes the output of an UART receiver which gives data (a byte at a time) in parallel. 
 
 # State machine
 Using a state machine for the parser is crucial to track which type of byte is expected. So successful (expected) bytes will advance the parser to the next state. In the code 7 states are used as follows: 
@@ -116,10 +118,43 @@ uint8_t generate_crc(uint8_t *payload){
 ```
 
 # Testing performed
+**CRC: ** This is tested against reliable online CRC calculator [Sunshine CRC Calculator]https://sunshine2k.de/coding/javascript/crc/crc_js.html by asserting a couple of the locally/code generated crc with results found from the site. 
+
+**Parser: ** This tested by a load of 350 stream of bytes (50 packets) of various cases generated with python scripts:
+- Valid 
+- Type invalid
+- Length invalid
+- CRC Error
+- Bad ends
+- Incomplete packets
+- Noise stream (random)
+
+=================== SUMMARY REPORT ===================
+ Valid Packets Parsed:  42
+ Stored Packets: 16
+ Total Errors Detected: 32
+---------------------------------------------------------
+  - CRC Errors:             3
+  - Type Errors:            1
+  - Length Errors:          1
+  - Framing/Bad End Errors: 1
+  - Buffer Overflow Errors: 26
+===========================================================
+
+
+**Ring buffer: ** Valid parsed packets were saved to the ring buffer sequentially until the buffer reached its capacity (16).
+These buffer data were tested with push and pop commands. 
+-   Carefully verifying their queue behavior is FIFO instead of LIFO. 
+-   Out of bound cases like poping an empty buffer and pushing on a full buffer. 
+
+**Statistics: **This function does operations over the buffer to calculate the max, min and average of the entire buffer values. 
+The results returned from the statistics were asserted against calculated values.
 
 # Assumptions and Limitations
-
 ## Assumptions
+- Input to the MCU is delivered as byte sequence.
+- Temperature input is communicated as a **signed** 8 bit, thus -327.68*C to 327,67*C for 0xFF,FF.
+- The Sensor system outputs a reliable CRC-8 polynomial correctly.
 
 ## Limitations
 If a packet is incomplete it can miss one subsequently incoming valid packet.
@@ -128,8 +163,32 @@ Explanation: The parser expects the next bytes but finds a CRC error or some bad
 
 Solving this is entirely possible, but it requires either branched parsing (memory and CPU inefficient) or limiting all byte ranges to assume 0xAA and 0xEE are always a start byte and end byte despite the state of the parser. 
 
+# Performance metrics:
+For embedded systems low latency, memory and power usage are key considerations...
 
-
-
-
-
+Giving crude analysis on the performance metrics we can consider the code simulation takedowns:
+**Memory**
+The memory usage can be classified as code memory (where the instructions sit) and runtime memory (all data processed);
+*code or flash memory (instructions)*: 
+    PARSER:  
+    
+    CRC:
+    
+    RING_BUFFER:
+*runtime memory (variables)*: 
+    
+    PARSER function:
+        parser_state: enum of 7 elements 1 byte
+        parser_status: enum of 7 elements 1 byte
+        packet_data / parsed_data: struct of 4 uint8_t elements (4bytes)
+        current_state: 1 byte
+            
+    CRC Function:
+        crc_result: uint8_t type takes one byte memory
+        payload: array of 4 uint8_t <= packet_data zero-copy (memory save!) no byte take!
+        
+    RING BUFFER function:
+        measurement_t: struct of int16_t and uint32_t 2 and 4 bytes => 6bytes
+        head, tail and count: uint8_t => 3bytes
+        data: 16 x measurement_t = 6*16 = 96
+    Memory usage: roughly 109 bytes!
