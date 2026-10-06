@@ -3,7 +3,6 @@
 
 // takes 4 arguments and calculates the CRC
 // CRC from type, length, data[0] and data[1]
-//
 
 uint8_t generate_crc(uint8_t *payload){
     uint8_t crc_result = 0x00;
@@ -12,12 +11,13 @@ uint8_t generate_crc(uint8_t *payload){
 
         // left shift until the MSB (bit)is 1
         for (int bit=0; bit<8; bit++){
-            // check if the MSB is 1;crc ANDed with 1000 0000
-            // results in 1000 0000 if true
-            // 1000 0000 = 0x80
+
+            // check if the Left most bit is 1;
+            // results in 0x80 = 1000 0000
+            // in C any non-zero value is considered true
             if (crc_result & 0x80){
                 crc_result = crc_result << 1;
-                crc_result ^= 0x07;// crc-8 polynomial
+                crc_result ^= 0x07;// CRC-8 polynomial
             }
             else{
             crc_result = crc_result<<1;
@@ -25,5 +25,4 @@ uint8_t generate_crc(uint8_t *payload){
         }
     }
     return crc_result;
-
 }

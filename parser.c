@@ -1,7 +1,7 @@
-#include <stdint.h>
-
 #include "parser.h"
 #include "crc.h"
+
+#include <stdint.h>
 
 static parser_states current_state = WAIT_START;
 
@@ -41,7 +41,8 @@ parser_status parse_byte(uint8_t byte){
             }
 
         case READ_DATA:
-            // first -> data_high, second -> data_low and next state; so the next byte lands on read_crc cleanly.
+            // first -> data_high, second -> data_low and next state; so the next byte lands on READ_CRC cleanly.
+
             // checks if data_buffer has read two times
             if (data_read == 0) {
                 parsed_data.data_high = byte;
@@ -56,7 +57,8 @@ parser_status parse_byte(uint8_t byte){
         case READ_CRC:{
             // stores the data to CRC for checking validity.
             uint8_t crc_received = byte;
-            uint8_t crc_calculated = generate_crc((const uint8_t *) &parsed_data);
+            uint8_t crc_payload[4] = {parsed_data.type, parsed_data.length, parsed_data.data_high, parsed_data.data_low};
+            uint8_t crc_calculated = generate_crc(crc_payload);
 
             if (crc_received == crc_calculated){
                 current_state = WAIT_END;
@@ -78,15 +80,12 @@ parser_status parse_byte(uint8_t byte){
                 parser_states_reset();
                 return PARSER_BAD_END;
             }
-        // packet_complete state may not be needed
-        case PACKET_COMPLETE: //TODO REMOVE
-            break;
         }
     return PARSER_WAITING; //Fallback
 }
 
 void parser_states_reset(){
-    // set the state to 0 i.e. wait_start
+    // set the state to 0 i.e. WAIT_START
     // and set data_read to none
     current_state = WAIT_START;
     data_read = 0;

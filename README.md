@@ -68,12 +68,11 @@ Circular buffers or ring buffers are buffer systems that use only a specific blo
 ## Theory
 The CRC error checking of a polynomial 8 is implemented as follows:
 
-It starts at 0x00 then it is XORed with the first byte. 
+It initializes at 0x00 which is then XORed with the first incoming byte. 
  
 Taking an example on 4 bytes:
-0000 0000 is the starting base, then after XORed with 0000 0001 (type temperature)
-0000 0001 is the result, this is shifted to the left bit by bit and whenever a bit 1 falls off the edge, XOR the result with the polynomial.
-Which results in
+0000 0000 is XORed with 0000 0001 (type temperature)
+0000 0001 is the result, this is shifted to the left bit by bit and whenever a bit 1 falls off the edge, XOR the result with the polynomial.Which results in:
 0000 0000 this will be XORed with the polynomial byte that is 0x07 0000 0111
 
 0000 0111 is the result, this is XORed with the next byte that's 0x02 

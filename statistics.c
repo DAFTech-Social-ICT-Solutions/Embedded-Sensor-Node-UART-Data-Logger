@@ -1,7 +1,7 @@
-#include <stdint.h>
-#include <stdio.h>
 #include "statistics.h"
 #include "ring_buffer.h"
+
+#include <stdint.h>
 
 int16_t get_max(){
     if (buffer_is_empty()){

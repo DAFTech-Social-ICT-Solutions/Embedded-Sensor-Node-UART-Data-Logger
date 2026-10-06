@@ -2,13 +2,12 @@
 #include <stdbool.h>
 
 typedef enum  {
-    WAIT_START, // check if incoming byte is a start byte (compare with 0xAA).
+    WAIT_START, // Check if incoming byte is a start byte (compare with 0xAA).
     READ_TYPE,
     READ_LENGTH,
-    READ_DATA, // there are two bytes we will read here
+    READ_DATA, // There are two bytes we will read here
     READ_CRC, // Receiving and checking the CRC for errors
-    WAIT_END, // waiting the end byte
-    PACKET_COMPLETE,
+    WAIT_END, // Waiting the end byte
 } parser_states;
 
 typedef enum {
@@ -21,10 +20,10 @@ typedef enum {
     PARSER_WAITING
 } parser_status;
 
-// these are the expected bytes from the UART for correct parsing
+// These are the expected bytes from the UART for correct parsing
 #define START_BYTE 0xAA //
-#define TYPE_BYTE 0x01 // for temperature
-#define LEN_BYTE 0x02 //
+#define TYPE_BYTE 0x01 // For temperature
+#define LEN_BYTE 0x02 // For length
 #define END_BYTE 0x55
 
 typedef struct {

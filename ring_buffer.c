@@ -1,6 +1,7 @@
-#include <stdint.h>
 #include "ring_buffer.h"
-#include <stdio.h>
+
+#include <stdint.h>
+
 static uint8_t head = 0;
 static uint8_t tail = 0;
 static uint8_t count = 0;
